@@ -1,0 +1,52 @@
+class Solution:
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        m,n = len(grid),len(grid[0])
+        dp = [[0]*n for _ in range(m)]
+        dp[0][0] = grid[0][0]
+        for j in range(1,n):
+            dp[0][j] = dp[0][j-1] + grid[0][j]
+        for i in range(1,m):
+            dp[i][0] = dp[i-1][0] + grid[i][0]
+        
+        for i in range(1,m):
+            for j in range(1,n):
+                dp[i][j] =   grid[i][j]+ min(dp[i-1][j],dp[i][j-1])
+        return dp[m-1][n-1]
+
+
+        Notes for Minimum Path Sum Problem
+Problem Description:
+Given a m x n grid filled with non-negative numbers, find a path from the top left to the bottom right which minimizes the sum of all numbers along its path. You can only move either down or right at any point in time.
+
+Approach:
+We will use Dynamic Programming (DP) to solve this problem efficiently.
+
+Steps:
+Initialization:
+
+Create a DP table dp with the same dimensions as the input grid.
+Initialize the starting point dp[0][0] with the value of the top-left corner of the grid: dp[0][0] = grid[0][0].
+Fill the First Row:
+
+For any cell in the first row (i.e., dp[0][j] for j > 0), the minimum path sum to that cell can only come from the cell directly to its left.
+Update the DP table for the first row:
+css
+Copy code
+dp[0][j] = dp[0][j - 1] + grid[0][j]
+Fill the First Column:
+
+For any cell in the first column (i.e., dp[i][0] for i > 0), the minimum path sum to that cell can only come from the cell directly above it.
+Update the DP table for the first column:
+css
+Copy code
+dp[i][0] = dp[i - 1][0] + grid[i][0]
+Fill the Rest of the DP Table:
+
+For each remaining cell in the grid (i.e., dp[i][j] for i > 0 and j > 0), the minimum path sum to that cell is the value of the cell itself plus the minimum of the values from the cell directly above (dp[i - 1][j]) and the cell directly to the left (dp[i][j - 1]).
+Update the DP table:
+css
+Copy code
+dp[i][j] = grid[i][j] + min(dp[i - 1][j], dp[i][j - 1])
+Result:
+
+The value at the bottom-right corner of the DP table (dp[m - 1][n - 1]) will be the minimum path sum from the top-left to the bottom-right of the grid.
