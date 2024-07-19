@@ -1,0 +1,15 @@
+min in row max in column 
+
+class Solution:
+    def luckyNumbers (self, matrix: List[List[int]]) -> List[int]:
+        result = []
+        for i in range(len(matrix)):
+            row_min = min(matrix[i])
+            row_index = matrix[i].index(row_min)
+            col_max = max(matrix[k][row_index] for k in range(len(matrix)))
+            if row_min == col_max:
+                result.append(row_min)
+
+
+        return result
+                
