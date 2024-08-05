@@ -1,0 +1,23 @@
+from typing import List
+
+class Solution:
+    def kthDistinct(self, arr: List[str], k: int) -> str:
+        thisset = set()
+        duplicates = set()
+        solution = []
+
+        for i in range(len(arr)):
+            if arr[i] in duplicates:
+                continue
+            if arr[i] in thisset:
+                thisset.remove(arr[i])
+                duplicates.add(arr[i])
+                solution.remove(arr[i])
+            else:
+                thisset.add(arr[i])
+                solution.append(arr[i])
+
+        if k - 1 < len(solution):
+            return solution[k - 1]
+        else:
+            return ""
