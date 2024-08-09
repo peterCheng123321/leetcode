@@ -1,0 +1,28 @@
+class Solution:
+    def checkvalid(self, subgrid):
+        elements = [num for row in subgrid for num in row]
+        if all(1 <= num <= 9 for num in elements):
+            return len(set(elements)) == 9
+        return False
+    
+    def is_magic_square(self, subgrid):
+        target_sum = 15
+        if all(sum(row) == target_sum for row in subgrid) and \
+           all(sum(subgrid[i][j] for i in range(3)) == target_sum for j in range(3)) and \
+           sum(subgrid[i][i] for i in range(3)) == target_sum and \
+           sum(subgrid[i][2-i] for i in range(3)) == target_sum:
+            return True
+        return False
+    
+    def numMagicSquaresInside(self, grid: List[List[int]]) -> int:
+        count = 0
+        a, b = len(grid), len(grid[0])
+        for i in range(a - 2):  # Corrected the range to include the last possible subgrid
+            for j in range(b - 2):  # Corrected the range to include the last possible subgrid
+                subgrid = [row[j:j+3] for row in grid[i:i+3]]
+                if self.checkvalid(subgrid):
+                    if self.is_magic_square(subgrid):
+                        count += 1
+        return count
+
+                
